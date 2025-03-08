@@ -1,0 +1,7 @@
+django
+jdatetime
+pathlib
+python-dotenv
+psycopg2-binary
+Pillow
+dj_database_url

@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+{% block title %}
+    خانه
+{% endblock %}
+
+{% load static %}
+{% block content %}
+
+
+<!-- Product Categories Section -->
+<section class="product-categories py-12">
+    <div class="container mx-auto text-center">
+        <h2 class="text-3xl font-semibold mb-6">دسته بندی محصولات</h2>
+        <div class="categories flex justify-center space-x-6">
+            <div class="category hover:bg-[#0EB3A2] p-4 rounded-xl transition-all">
+                <img src=" {% static 'image/5.png' %}" alt="هدایا" class="w-20 mx-auto mb-2">
+                <p>هدایا</p>
+            </div>
+            <div class="category hover:bg-[#0EB3A2] p-4 rounded-xl transition-all">
+                <img src="{% static 'image/2.png' %}" alt="زیورآلات" class="w-20 mx-auto mb-2">
+                <p>زیورآلات فیروزه کوبی</p>
+            </div>
+            <div class="category hover:bg-[#0EB3A2] p-4 rounded-xl transition-all">
+                <img src="{% static 'image/plate.png' %}" alt="دکوراسیون" class="w-20 mx-auto mb-2">
+                <p>دکوراسیون منزل</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section with a vertical rectangle and product list -->
+<section class="flex flex-col items-center py-12 bg-gray-100">
+    <div class="w-full flex flex-row items-start justify-between bg-[#FFEACD] p-6 rounded-lg shadow-lg">
+        <!-- Text section -->
+        <div class="w-1/5 text-right">
+            <h2 class="text-3xl font-semibold mb-4">مشاهده محصولات</h2>
+            <a href="{% url 'products' %}">
+                <button
+                    class="mt-4 bg-[#0EB3A2] text-white py-2 px-4 rounded-md hover:bg-[#0EB3A2] hover:text-[#F5DBB5] transition-colors">
+                    مشاهده بیشتر محصولات
+                </button>
+            </a>
+        </div>
+        <!-- Product list -->
+        <div class="w-4/5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+            {% for product in products|slice:":4" %}
+            <a href="{% url 'product' product.id %}"
+                class="relative product bg-[#FFFFFF] p-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow block">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                    class="w-full h-32 object-cover rounded-md mb-2">
+                <h3 class="text-sm font-semibold mb-1">{{ product.name }}</h3>
+                <p class="text-xs text-gray-600 mb-1">{{ product.description|truncatewords:10 }}</p>
+                <p class="text-sm font-semibold text-gray-800">قیمت: {{ product.price }} تومان</p>
+                {% if product.stock == 0 %}
+                <p class="text-sm font-semibold text-red-600">موجود نیست</p>
+                {% elif product.stock <= 5 %} <p class="text-sm font-semibold text-red-600">فقط {{ product.stock }} تا
+                    مونده در انبار</p>
+                    {% else %}
+                    {% endif %}
+                    <br>
+                    <span
+                        class="hidden absolute bottom-4 left-4 bg-blue-600 text-white text-xs py-1 px-2 rounded-md hover:bg-blue-700 transition-colors product-button">افزودن
+                        به سبد خرید</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
