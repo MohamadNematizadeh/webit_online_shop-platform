@@ -95,11 +95,11 @@ WSGI_APPLICATION = 'mysit.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB'),  # Default value is 'postgres'
-        'USER': os.getenv('POSTGRES_USER'),  # Default value is 'root'
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'HOST': os.getenv('POSTGRES_HOST'),
-        'PORT': os.getenv('POSTGRES_PORT'),  # Default port for PostgreSQL
+        'NAME': os.getenv('DATABASE_NAME', 'mydatabase'),
+        'USER': os.getenv('DATABASE_USER', 'myuser'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'mypassword'),
+        'HOST': os.getenv('DATABASE_HOST', 'db'),  # Refers to the service name in docker-compose.yml
+        'PORT': os.getenv('DATABASE_PORT', '5432'),
     }
 }
 

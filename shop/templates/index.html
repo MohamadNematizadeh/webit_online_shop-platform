@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block title %}
-    خانه
+خانه
 {% endblock %}
 
 {% load static %}
@@ -44,11 +44,13 @@
         <!-- Product list -->
         <div class="w-4/5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             {% for product in products|slice:":4" %}
+
             <a href="{% url 'product' product.id %}"
                 class="relative product bg-[#FFFFFF] p-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow block">
-                <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                {% for image in product.images.all %}
+                <img src="{{ image.image.url }}" alt="{{ product.name }}"
                     class="w-full h-32 object-cover rounded-md mb-2">
-                <h3 class="text-sm font-semibold mb-1">{{ product.name }}</h3>
+                {%endfor%} <h3 class="text-sm font-semibold mb-1">{{ product.name }}</h3>
                 <p class="text-xs text-gray-600 mb-1">{{ product.description|truncatewords:10 }}</p>
                 <p class="text-sm font-semibold text-gray-800">قیمت: {{ product.price }} تومان</p>
                 {% if product.stock == 0 %}

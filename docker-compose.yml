@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_DB: databes_mohammadshop
+      POSTGRES_USER: mohammad
+      POSTGRES_PASSWORD: mohammad_db_12
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  web:
+    build: .
+    container_name: django_app
+    restart: always
+    depends_on:
+      - db
+    environment:
+      DATABASE_NAME: databes_mohammadshop
+      DATABASE_USER: mohammad
+      DATABASE_PASSWORD: mohammad_db_12
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    command: ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+
+volumes:
+  postgres_data:
